@@ -11,7 +11,7 @@ CFLAGS = $(DEBUG)
 CXXFLAGS = $(DEBUG)
 AC_CXXFLAGS = $(DEBUG)
 
-INCLUDES = -I$(top_srcdir)/include
+INCLUDES = -I$(top_srcdir)/include -I/usr/local/include/hdfs
 
 PROTOS := $(top_srcdir)/src/proto/singa.proto \
           $(top_srcdir)/src/proto/job.proto \
@@ -63,6 +63,8 @@ SINGA_SRCS := src/driver.cc \
               src/io/kvfile_store.cc \
               src/io/textfile_store.cc \
               src/io/store.cc \
+              src/io/hdfsfile.cc \
+              src/io/hdfsfile_store.cc \
               src/utils/cluster.cc \
               src/utils/cluster_rt.cc \
               src/utils/graph.cc \
@@ -99,6 +101,8 @@ SINGA_HDRS := include/singa.h \
               include/singa/io/kvfile.h \
               include/singa/io/kvfile_store.h \
               include/singa/io/textfile_store.h \
+              include/singa/io/hdfsfile.h \
+              include/singa/io/hdfsfile_store.h \
               include/mshadow/tensor_expr.h \
               include/mshadow/tensor_container.h \
               include/mshadow/tensor_expr_ext.h \
@@ -150,7 +154,8 @@ singa_LDFLAGS = -I./include \
                 -lopenblas \
                 -lzmq \
                 -lczmq \
-                -lzookeeper_mt
+                -lzookeeper_mt \
+                -lhdfs3
 if LMDB
 singa_LDFLAGS += -llmdb
 endif
@@ -163,7 +168,8 @@ singatool_LDFLAGS = -I./include \
                     -lsinga \
                     -lglog  \
                     -lprotobuf \
-                    -lzookeeper_mt
+                    -lzookeeper_mt \
+                    -lhdfs3
 
 #lib_LTLIBRARIES += libgtest.la
 libgtest_la_SOURCES = $(GTEST_HDRS) $(GTEST_SRCS)
